@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MM+ Plan Comparison</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .container {
+            max-width: 800px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+
+    <div class="container mx-auto bg-white rounded-xl shadow-2xl p-8 md:p-12 border border-gray-200">
+        <h1 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-2">MM+ Plan Comparison</h1>
+        <p class="text-center text-gray-500 mb-8">Compare the key features and rates of our MM+ plans.</p>
+
+        <!-- Form Section -->
+        <div id="form-section" class="space-y-6">
+            <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">Your Information</h2>
+                
+                <!-- Deductible Selection -->
+                <div>
+                    <label for="deductible" class="block text-sm font-medium text-gray-700 mb-2">Select Your Deductible</label>
+                    <select id="deductible" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out">
+                        <option value="4900">$4,900 Deductible</option>
+                        <option value="7250">$7,250 Deductible</option>
+                    </select>
+                </div>
+
+                <!-- Age Selection -->
+                <div>
+                    <label for="age" class="block text-sm font-medium text-gray-700 mb-2">Your Age Group</label>
+                    <select id="age" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out">
+                        <option value="18-29">18-29</option>
+                        <option value="30-44">30-44</option>
+                        <option value="45-54">45-54</option>
+                        <option value="55-64">55-64</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Family Status -->
+            <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4">Your Coverage</h2>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Do you have a spouse?</label>
+                    <div class="flex items-center space-x-4">
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="spouse" value="yes" class="form-radio text-blue-600 focus:ring-blue-500" checked>
+                            <span class="ml-2 text-gray-700">Yes</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="spouse" value="no" class="form-radio text-blue-600 focus:ring-blue-500">
+                            <span class="ml-2 text-gray-700">No</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Do you have children?</label>
+                    <div class="flex items-center space-x-4">
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="children" value="yes" class="form-radio text-blue-600 focus:ring-blue-500" checked>
+                            <span class="ml-2 text-gray-700">Yes</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="children" value="no" class="form-radio text-blue-600 focus:ring-blue-500">
+                            <span class="ml-2 text-gray-700">No</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <button id="analyze-button" class="w-full px-6 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 transition duration-150 ease-in-out">Analyze My Plan</button>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results-section" class="hidden">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 text-center">Your Customized Quote</h2>
+            <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 mb-6 space-y-4">
+                <h3 class="text-xl font-semibold text-gray-700 mb-2">Your Selections</h3>
+                <p><strong>Deductible:</strong> <span id="summary-deductible" class="font-medium text-blue-600"></span></p>
+                <p><strong>Age Group:</strong> <span id="summary-age" class="font-medium text-blue-600"></span></p>
+                <p><strong>Plan Type:</strong> <span id="summary-plan-type" class="font-medium text-blue-600"></span></p>
+            </div>
+
+            <div class="bg-blue-50 p-6 rounded-lg border border-blue-200 mb-6">
+                <h3 class="text-xl font-semibold text-blue-800 mb-4">Monthly Premiums</h3>
+                <div class="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-blue-100 flex-1">
+                        <p class="text-lg font-bold text-blue-700">PHCS</p>
+                        <p class="text-2xl font-extrabold text-blue-900 mt-1" id="rate-phcs">$0.00</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-blue-100 flex-1">
+                        <p class="text-lg font-bold text-blue-700">Cigna</p>
+                        <p class="text-2xl font-extrabold text-blue-900 mt-1" id="rate-cigna">$0.00</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-blue-100 flex-1">
+                        <p class="text-lg font-bold text-blue-700">BCBS</p>
+                        <p class="text-2xl font-extrabold text-blue-900 mt-1" id="rate-bcbs">$0.00</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 mb-6">
+                <h3 class="text-xl font-semibold text-gray-700 mb-4">Summary of Benefits</h3>
+                <ul id="benefits-list" class="space-y-4">
+                    <!-- Benefits will be dynamically inserted here -->
+                </ul>
+            </div>
+
+            <button id="start-over-button" class="w-full px-6 py-3 bg-gray-600 text-white font-bold rounded-lg shadow-md hover:bg-gray-700 transition duration-150 ease-in-out">Start Over</button>
+        </div>
+
+    </div>
+
+    <script>
+        // Data extracted from the PDFs
+        const planData = {
+            rates: {
+                "4900": {
+                    "18-29": {
+                        "Employee": { "PHCS": 600.10, "Cigna": 660.10, "BCBS": 680.10 },
+                        "Employee + Spouse": { "PHCS": 1057.88, "Cigna": 1137.88, "BCBS": 1157.88 },
+                        "Employee + Child(ren)": { "PHCS": 968.38, "Cigna": 1048.38, "BCBS": 1068.38 },
+                        "Family": { "PHCS": 1520.81, "Cigna": 1620.81, "BCBS": 1640.81 }
+                    },
+                    "30-44": {
+                        "Employee": { "PHCS": 618.00, "Cigna": 678.00, "BCBS": 698.00 },
+                        "Employee + Spouse": { "PHCS": 1093.68, "Cigna": 1173.68, "BCBS": 1193.68 },
+                        "Employee + Child(ren)": { "PHCS": 1000.60, "Cigna": 1080.60, "BCBS": 1100.60 },
+                        "Family": { "PHCS": 1574.51, "Cigna": 1674.51, "BCBS": 1694.51 }
+                    },
+                    "45-54": {
+                        "Employee": { "PHCS": 645.47, "Cigna": 705.47, "BCBS": 725.47 },
+                        "Employee + Spouse": { "PHCS": 1143.47, "Cigna": 1223.47, "BCBS": 1243.47 },
+                        "Employee + Child(ren)": { "PHCS": 1045.93, "Cigna": 1125.93, "BCBS": 1145.93 },
+                        "Family": { "PHCS": 1646.63, "Cigna": 1746.63, "BCBS": 1766.63 }
+                    },
+                    "55-64": {
+                        "Employee": { "PHCS": 686.19, "Cigna": 746.19, "BCBS": 766.19 },
+                        "Employee + Spouse": { "PHCS": 1230.04, "Cigna": 1310.04, "BCBS": 1330.04 },
+                        "Employee + Child(ren)": { "PHCS": 1123.33, "Cigna": 1203.33, "BCBS": 1223.33 },
+                        "Family": { "PHCS": 1779.06, "Cigna": 1879.06, "BCBS": 1899.06 }
+                    }
+                },
+                "7250": {
+                    "18-29": {
+                        "Employee": { "PHCS": 510.48, "Cigna": 570.48, "BCBS": 590.48 },
+                        "Employee + Spouse": { "PHCS": 878.63, "Cigna": 958.63, "BCBS": 978.63 },
+                        "Employee + Child(ren)": { "PHCS": 807.06, "Cigna": 887.06, "BCBS": 907.06 },
+                        "Family": { "PHCS": 1251.94, "Cigna": 1351.94, "BCBS": 1371.94 }
+                    },
+                    "30-44": {
+                        "Employee": { "PHCS": 524.80, "Cigna": 584.80, "BCBS": 604.80 },
+                        "Employee + Spouse": { "PHCS": 907.26, "Cigna": 987.26, "BCBS": 1007.26 },
+                        "Employee + Child(ren)": { "PHCS": 832.83, "Cigna": 912.83, "BCBS": 932.83 },
+                        "Family": { "PHCS": 1294.89, "Cigna": 1394.89, "BCBS": 1414.89 }
+                    },
+                    "45-54": {
+                        "Employee": { "PHCS": 547.79, "Cigna": 607.79, "BCBS": 627.79 },
+                        "Employee + Spouse": { "PHCS": 948.11, "Cigna": 1028.11, "BCBS": 1048.11 },
+                        "Employee + Child(ren)": { "PHCS": 870.11, "Cigna": 950.11, "BCBS": 970.11 },
+                        "Family": { "PHCS": 1353.59, "Cigna": 1453.59, "BCBS": 1473.59 }
+                    },
+                    "55-64": {
+                        "Employee": { "PHCS": 579.33, "Cigna": 639.33, "BCBS": 659.33 },
+                        "Employee + Spouse": { "PHCS": 1016.32, "Cigna": 1096.32, "BCBS": 1116.32 },
+                        "Employee + Child(ren)": { "PHCS": 930.98, "Cigna": 1010.98, "BCBS": 1030.98 },
+                        "Family": { "PHCS": 1458.47, "Cigna": 1558.47, "BCBS": 1578.47 }
+                    }
+                }
+            },
+            benefits: [
+                { service: "Deductible", innCost: "Individual: $4,900 / Family: $9,800 or Individual: $7,250 / Family: $14,500", oonCost: "Individual: $14,500 / Family: $29,000", notes: "Depends on your plan." },
+                { service: "Coinsurance", innCost: "20%", oonCost: "50%", notes: "Percentage amount paid after deductible is met." },
+                { service: "Out-of-Pocket Limit", innCost: "Individual: $9,200 / Family: $18,400", oonCost: "Individual: $18,400 / Family: $36,800", notes: "Includes deductible, coinsurance, & copayments." },
+                { service: "Primary Care Physician", innCost: "$25 Copay", oonCost: "OON Deductible & Coinsurance", notes: "" },
+                { service: "Specialist Office Visit", innCost: "$40 Copay", oonCost: "OON Deductible & Coinsurance", notes: "No referral needed." },
+                { service: "Urgent Care Visit", innCost: "$60 Copay", oonCost: "OON Deductible & Coinsurance", notes: "" },
+                { service: "Spinal Manipulation Chiropractic", innCost: "$30 Copay", oonCost: "OON Deductible & Coinsurance", notes: "24 visits per plan year." },
+                { service: "Telemedicine (OurLiveDoc ONLY)", innCost: "$0 Copay", oonCost: "No Covered", notes: "Unlimited visits." },
+                { service: "Emergency Services", innCost: "20% After Deductible", oonCost: "OON Deductible & Coinsurance", notes: "Precertification required within 48 hours of admission." },
+                { service: "Emergency Ambulance Services", innCost: "20% After Deductible", oonCost: "OON Deductible & Coinsurance", notes: "Ground/Air Ambulance." },
+                { service: "Labs", innCost: "$25 Copay", oonCost: "OON Deductible & Coinsurance", notes: "" },
+                { service: "X-rays", innCost: "$100 Copay", oonCost: "OON Deductible & Coinsurance", notes: "" },
+                { service: "Diagnostic Testing/Advanced Imaging", innCost: "20% After Deductible", oonCost: "OON Deductible & Coinsurance", notes: "Precertification required." },
+                { service: "Outpatient Surgical Facility Services", innCost: "20% After Deductible", oonCost: "OON Deductible & Coinsurance", notes: "Precertification required." },
+                { service: "Outpatient Chemotherapy and Radiotherapy", innCost: "20% After Deductible", oonCost: "Not Covered", notes: "30 days per plan year." },
+                { service: "Inpatient Hospital Care Facility", innCost: "20% After Deductible", oonCost: "OON Deductible & Coinsurance", notes: "Precertification required." },
+                { service: "Inpatient Hospital Surgical Services", innCost: "20% After Deductible", oonCost: "OON Deductible & Coinsurance", notes: "Precertification required." },
+                { service: "Intensive Care Unit", innCost: "20% After Deductible", oonCost: "OON Deductible & Coinsurance", notes: "30 days per plan year." },
+                { service: "Inpatient Rehabilitation Facility", innCost: "20% After Deductible", oonCost: "OON Deductible & Coinsurance", notes: "30 days per plan year." },
+                { service: "Alcohol & Substance Abuse", innCost: "20% After Deductible", oonCost: "OON Deductible & Coinsurance", notes: "30 days per plan year (inpatient/outpatient)." },
+                { service: "Preventive Care/Screening/Immunization", innCost: "$0 Copay, $0 Deductible", oonCost: "OON Deductible & Coinsurance", notes: "Annual physical, mammogram, immunizations, etc." },
+                { service: "Physical & Occupational Therapies", innCost: "$40 Copay", oonCost: "OON Deductible & Coinsurance", notes: "30 visits per plan year." },
+                { service: "Pregnancy/Maternity", innCost: "20% After Deductible", oonCost: "OON Deductible & Coinsurance", notes: "Prenatal/Postnatal Office Visit, Room and Board." },
+                { service: "Home Health Care Visits", innCost: "20% After Deductible", oonCost: "OON Deductible & Coinsurance", notes: "60-visit limit per benefit year. Precertification required." },
+                { service: "Hospice Care", innCost: "20% After Deductible", oonCost: "OON Deductible & Coinsurance", notes: "30 days per benefit year maximum. Precertification required." },
+                { service: "Inpatient Skilled Nursing Facility", innCost: "20% After Deductible", oonCost: "OON Deductible & Coinsurance", notes: "30-day visit limit per benefit year. Precertification required." },
+                { service: "Durable Medical Equipment (DME)", innCost: "20% After Deductible", oonCost: "OON Deductible & Coinsurance", notes: "Limited to 12-month rental or purchase price. Precertification required." },
+                { service: "Diabetic Nutritional Counseling", innCost: "20% After Deductible", oonCost: "OON Deductible & Coinsurance", notes: "1 visit per plan year." },
+                { service: "Organ Transplant", innCost: "20% After Deductible", oonCost: "Not Covered", notes: "Precertification required." },
+                { service: "Allergy Testing/Injections", innCost: "20% After Deductible", oonCost: "OON Deductible & Coinsurance", notes: "" },
+                { service: "Prescription Drugs (30-day supply)", innCost: "Varies", oonCost: "OON Deductible & Coinsurance", notes: "Generic: $10 Copay, Preferred Brand: $90 Copay, Non-Preferred Brand: $110 Copay." },
+                { service: "Prescription Drugs (90-day supply)", innCost: "Varies", oonCost: "OON Deductible & Coinsurance", notes: "Generic: $20 Copay, Preferred Brand: $180 Copay, Non-Preferred Brand: $220 Copay." },
+            ]
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const formSection = document.getElementById('form-section');
+            const resultsSection = document.getElementById('results-section');
+            const analyzeButton = document.getElementById('analyze-button');
+            const startOverButton = document.getElementById('start-over-button');
+            const benefitsList = document.getElementById('benefits-list');
+
+            analyzeButton.addEventListener('click', () => {
+                const deductible = document.getElementById('deductible').value;
+                const ageGroup = document.getElementById('age').value;
+                const hasSpouse = document.querySelector('input[name="spouse"]:checked').value === 'yes';
+                const hasChildren = document.querySelector('input[name="children"]:checked').value === 'yes';
+
+                let planType = "Employee";
+                if (hasSpouse && hasChildren) {
+                    planType = "Family";
+                } else if (hasSpouse) {
+                    planType = "Employee + Spouse";
+                } else if (hasChildren) {
+                    planType = "Employee + Child(ren)";
+                }
+
+                // Look up rates
+                const rates = planData.rates[deductible][ageGroup][planType];
+                const phcsRate = rates.PHCS;
+                const cignaRate = rates.Cigna;
+                const bcbsRate = rates.BCBS;
+
+                // Update summary
+                document.getElementById('summary-deductible').textContent = `$${deductible}`;
+                document.getElementById('summary-age').textContent = ageGroup;
+                document.getElementById('summary-plan-type').textContent = planType;
+
+                // Update rates
+                document.getElementById('rate-phcs').textContent = `$${phcsRate.toFixed(2)}`;
+                document.getElementById('rate-cigna').textContent = `$${cignaRate.toFixed(2)}`;
+                document.getElementById('rate-bcbs').textContent = `$${bcbsRate.toFixed(2)}`;
+
+                // Display benefits
+                benefitsList.innerHTML = '';
+                planData.benefits.forEach(benefit => {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'bg-white p-4 rounded-lg border border-gray-100 shadow-sm space-y-2';
+                    
+                    let content = `<div class="font-bold text-gray-800">${benefit.service}</div>`;
+                    
+                    // Display INN cost
+                    if (benefit.innCost) {
+                        content += `<div class="text-sm text-gray-600"><strong>In-Network:</strong> ${benefit.innCost}</div>`;
+                    }
+                    
+                    // Display OON cost
+                    if (benefit.oonCost) {
+                        content += `<div class="text-sm text-gray-600"><strong>Out-of-Network:</strong> ${benefit.oonCost}</div>`;
+                    }
+
+                    if (benefit.notes) {
+                        content += `<div class="text-sm text-gray-500"><em>Notes:</em> ${benefit.notes}</div>`;
+                    }
+                    
+                    listItem.innerHTML = content;
+                    benefitsList.appendChild(listItem);
+                });
+
+                // Show results, hide form
+                formSection.classList.add('hidden');
+                resultsSection.classList.remove('hidden');
+            });
+
+            startOverButton.addEventListener('click', () => {
+                resultsSection.classList.add('hidden');
+                formSection.classList.remove('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
